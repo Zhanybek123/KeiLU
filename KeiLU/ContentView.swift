@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    @State var selectedMonth = 0
     
     var body: some View {
         VStack{
@@ -59,10 +60,66 @@ struct ContentView: View {
                 }
             }
             .padding(5)
+            
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), content: {
+                ForEach(fetchDates()) { value in
+                    Text("\(value.day)")
+                }
+            })
         }
     }
+    func fetchDates() -> [CalendarDate] {
+        let calendar = Calendar.current
+        let currentMonth = fetchSelectedMonth()
+        let datesOfMonth = currentMonth.datesOfTheMonth().map ({ CalendarDate(day: calendar.component(.day, from: $0), date: $0)})
+        return datesOfMonth
+    }
+    
+    func fetchSelectedMonth() -> Date {
+        let calendar = Calendar.current
+        
+        let month = calendar.date(byAdding: .month, value: selectedMonth, to: Date())
+        guard let month = month else { return Date()}
+        return month
+    }
+}
+
+struct CalendarDate: Identifiable {
+    let id = UUID()
+    let day: Int
+    let date: Date
 }
 
 #Preview {
     ContentView()
+}
+
+
+extension Date {
+    func datesOfTheMonth() -> [Date] {
+        let calendar = Calendar.current
+        let currentMonth = calendar.component(.month, from: self)
+        let currentYear = calendar.component(.year, from: self)
+        
+        var startDateComponents = DateComponents()
+        startDateComponents.year = currentYear
+        startDateComponents.month = currentMonth
+        startDateComponents.day = 1
+        let startDate = calendar.date(from: startDateComponents)!
+        
+        var endDateComponents = DateComponents()
+        endDateComponents.month = 1
+        endDateComponents.day = -1
+        let endDate = calendar.date(byAdding: endDateComponents, to: startDate)!
+        
+        var dates: [Date] = []
+        var currentDate = startDate
+        
+        while currentDate <= endDate {
+            dates.append(currentDate)
+            currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
+        }
+        
+        return dates
+    }
 }
