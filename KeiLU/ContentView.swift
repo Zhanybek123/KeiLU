@@ -32,6 +32,7 @@ struct ContentView: View {
             
             HStack{
                 Button {
+                    selectedMonth -= 1
                     print("something")
                 } label: {
                     Image(systemName: "lessthan")
@@ -45,7 +46,7 @@ struct ContentView: View {
                     .padding([.leading, .trailing], 20)
                 
                 Button {
-                    print("something")
+                    selectedMonth += 1
                 } label: {
                     Image(systemName: "greaterthan")
                         .resizable()
@@ -63,21 +64,31 @@ struct ContentView: View {
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), content: {
                 ForEach(fetchDates()) { value in
-                    Text("\(value.day)")
+                    if value.day != -1 {
+                        Text("\(value.day)")
+                            .padding(5)
+                    } else {
+                        Text("")
+                    }
                 }
             })
+            Spacer()
         }
     }
+    
     func fetchDates() -> [CalendarDate] {
         let calendar = Calendar.current
         let currentMonth = fetchSelectedMonth()
-        let datesOfMonth = currentMonth.datesOfTheMonth().map ({ CalendarDate(day: calendar.component(.day, from: $0), date: $0)})
+        var datesOfMonth = currentMonth.datesOfTheMonth().map ({ CalendarDate(day: calendar.component(.day, from: $0), date: $0)})
+        let firstDayOfWeek = calendar.component(.weekday, from: datesOfMonth.first?.date ?? Date())
+        for _ in 0..<firstDayOfWeek - 1 {
+            datesOfMonth.insert(CalendarDate(day: -1, date: Date()), at: 0)
+        }
         return datesOfMonth
     }
     
     func fetchSelectedMonth() -> Date {
         let calendar = Calendar.current
-        
         let month = calendar.date(byAdding: .month, value: selectedMonth, to: Date())
         guard let month = month else { return Date()}
         return month
