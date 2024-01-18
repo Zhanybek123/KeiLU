@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     @State var selectedMonth = 0
+    @State var selectedDate = Date()
     
     var body: some View {
         VStack{
@@ -32,8 +33,9 @@ struct ContentView: View {
             
             HStack{
                 Button {
-                    selectedMonth -= 1
-                    print("something")
+                    withAnimation {
+                        selectedMonth -= 1
+                    }
                 } label: {
                     Image(systemName: "lessthan")
                         .resizable()
@@ -41,12 +43,14 @@ struct ContentView: View {
                         .frame(width: 16, height: 28)
                 }
                 
-                Text("January 2024")
+                Text(selectedDate.monthAndYear())
                     .font(.title2)
                     .padding([.leading, .trailing], 20)
                 
                 Button {
-                    selectedMonth += 1
+                    withAnimation {
+                        selectedMonth += 1
+                    }
                 } label: {
                     Image(systemName: "greaterthan")
                         .resizable()
@@ -62,17 +66,32 @@ struct ContentView: View {
             }
             .padding(5)
             
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 6), content: {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), content: {
                 ForEach(fetchDates()) { value in
                     if value.day != -1 {
                         Text("\(value.day)")
                             .padding(5)
+                            .background {
+                                ZStack(alignment: .bottom) {
+                                    Circle()
+                                        .frame(width: 40, height: 40)
+                                        .foregroundStyle(value.day % 2 != 0 ? .blue.opacity(0.3) : .clear)
+                                    if value.date.toString() == Date().toString(){
+                                        Circle()
+                                            .frame(width: 8, height:  8)
+                                            .foregroundStyle(.black)
+                                    }
+                                }
+                            }
                     } else {
                         Text("")
                     }
                 }
             })
             Spacer()
+        }
+        .onChange(of: selectedMonth) {
+            selectedDate = fetchSelectedMonth()
         }
     }
     
@@ -107,6 +126,18 @@ struct CalendarDate: Identifiable {
 
 
 extension Date {
+    func toString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/DD/YYYY"
+        return formatter.string(from: self)
+    }
+    
+    func monthAndYear() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM YYYY"
+        return formatter.string(from: self)
+    }
+    
     func datesOfTheMonth() -> [Date] {
         let calendar = Calendar.current
         let currentMonth = calendar.component(.month, from: self)
@@ -130,7 +161,6 @@ extension Date {
             dates.append(currentDate)
             currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate)!
         }
-        
         return dates
     }
 }
