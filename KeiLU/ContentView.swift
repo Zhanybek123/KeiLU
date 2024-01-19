@@ -13,85 +13,109 @@ struct ContentView: View {
     @State var selectedDate = Date()
     
     var body: some View {
-        VStack{
-            Image("myFace")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 150, height: 150)
-                .clipShape(.capsule)
-            
-            Text("Marco Luciano")
-                .font(.title)
-                .bold()
-            
-            Rectangle()
-                .frame(height: 1)
-            
-            Text("Select day")
-                .font(.title2)
-                .bold()
-            
-            HStack{
-                Button {
-                    withAnimation {
-                        selectedMonth -= 1
-                    }
-                } label: {
-                    Image(systemName: "lessthan")
+        ScrollView {
+            VStack(spacing: 8) {
+                HStack {
+                    Image("myFace")
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 16, height: 28)
+                        .frame(width: 100, height: 150)
+                        .clipShape(.capsule)
+                        .padding(2)
+                    Text("Marco Luciano")
+                        .font(.title)
+                        .bold()
                 }
                 
-                Text(selectedDate.monthAndYear())
-                    .font(.title2)
-                    .padding([.leading, .trailing], 20)
+                Rectangle()
+                    .frame(height: 1)
                 
-                Button {
-                    withAnimation {
-                        selectedMonth += 1
+                Text("Select day")
+                    .font(.title3)
+                    .bold()
+                
+                HStack{
+                    Button {
+                        withAnimation {
+                            selectedMonth -= 1
+                        }
+                    } label: {
+                        Image(systemName: "lessthan")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 16, height: 18)
                     }
-                } label: {
-                    Image(systemName: "greaterthan")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 16, height: 28)
+                    
+                    Text(selectedDate.monthAndYear())
+                        .font(.title3)
+                        .padding([.leading, .trailing], 10)
+                    
+                    Button {
+                        withAnimation {
+                            selectedMonth += 1
+                        }
+                    } label: {
+                        Image(systemName: "greaterthan")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 16, height: 18)
+                    }
                 }
-            }
-            HStack {
-                ForEach(days, id: \.self) { day in
-                    Text(day)
-                        .frame(maxWidth: .infinity)
+                HStack {
+                    ForEach(days, id: \.self) { day in
+                        Text(day)
+                            .frame(maxWidth: .infinity)
+                    }
                 }
-            }
-            .padding(5)
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), content: {
-                ForEach(fetchDates()) { value in
-                    if value.day != -1 {
-                        Text("\(value.day)")
-                            .padding(5)
-                            .background {
-                                ZStack(alignment: .bottom) {
-                                    Circle()
-                                        .frame(width: 40, height: 40)
-                                        .foregroundStyle(value.day % 2 != 0 ? .blue.opacity(0.3) : .clear)
-                                    if value.date.toString() == Date().toString(){
+                .padding(5)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), content: {
+                    ForEach(fetchDates()) { value in
+                        if value.day != -1 {
+                            Text("\(value.day)")
+                                .padding(5)
+                                .background {
+                                    ZStack(alignment: .bottom) {
                                         Circle()
-                                            .frame(width: 8, height:  8)
-                                            .foregroundStyle(.black)
+                                            .frame(width: 35, height: 35)
+                                            .foregroundStyle(value.day % 2 != 0 ? .blue.opacity(0.3) : .clear)
+                                        if value.date.toString() == Date().toString() {
+                                            Circle()
+                                                .frame(width: 7, height:  7)
+                                                .foregroundStyle(.black)
+                                        }
                                     }
                                 }
-                            }
-                    } else {
-                        Text("")
+                        } else {
+                            Text("")
+                        }
                     }
-                }
-            })
-            Spacer()
+                })
+                Rectangle()
+                    .frame(height: 1)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), content: {
+                    Capsule()
+                        .fill(Color.blue).opacity(0.2)
+                        .frame(width: 150, height: 50)
+                        .overlay {
+                            Text("8am - 9am")
+                        }
+                    Capsule()
+                        .fill(Color.blue).opacity(0.2)
+                        .frame(width: 150, height: 50)
+                        .overlay {
+                            Text("9am - 10am")
+                        }
+                })
+                Spacer()
+                
+                
+                
+            }
+            .onChange(of: selectedMonth) {
+                selectedDate = fetchSelectedMonth()
         }
-        .onChange(of: selectedMonth) {
-            selectedDate = fetchSelectedMonth()
         }
     }
     
