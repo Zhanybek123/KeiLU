@@ -11,7 +11,7 @@ struct ContentView: View {
     let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     @State var selectedMonth = 0
     @State var selectedDate = Date()
-    @State var availableTime: [String] = ["8am - 9am", "9am - 10am", "10am - 11am"]
+    @State var availableTime: [String] = ["8am - 9am", "9am - 10am", "10am - 11am", "11am - 12pm", "12pm - 1pm"]
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -79,7 +79,7 @@ struct ContentView: View {
                                         ZStack(alignment: .bottom) {
                                             Circle()
                                                 .frame(width: 35, height: 35)
-                                                .foregroundStyle(value.day % 2 != 0 ? .blue.opacity(0.3) : .clear)
+                                                .foregroundStyle(value.day % 2 != 0 ? Color("Main") : .clear)
                                             if value.date.toString() == Date().toString() {
                                                 Circle()
                                                     .frame(width: 7, height:  7)
@@ -95,20 +95,32 @@ struct ContentView: View {
                     Rectangle()
                         .frame(height: 1)
                     
-                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), content: {
-                        ForEach(availableTime, id: \.self) { time in
-                            NavigationLink {
-                                EmptyView()
-                            } label: {
-                                Capsule()
-                                    .fill(Color.blue).opacity(0.2)
-                                    .frame(width: 150, height: 50)
-                                    .overlay {
-                                        Text(time)
-                                    }
+                    VStack(spacing: 30) {
+                        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), content: {
+                            ForEach(availableTime, id: \.self) { time in
+                                NavigationLink {
+                                    EmptyView()
+                                } label: {
+                                    Capsule()
+                                        .fill(Color("Main")).opacity(0.2)
+                                        .frame(width: 150, height: 50)
+                                        .overlay {
+                                            Text(time)
+                                        }
+                                }
                             }
+                        })
+                        NavigationLink {
+                            EmptyView()
+                        } label: {
+                            Text("Select time")
+                                .padding()
+                                .background {
+                                    Capsule()
+                                        .stroke()
+                                }
                         }
-                    })
+                    }
                     Spacer()
                 }
                 .onChange(of: selectedMonth) {
