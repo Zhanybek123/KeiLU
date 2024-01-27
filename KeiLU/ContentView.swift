@@ -12,6 +12,9 @@ struct ContentView: View {
     @State var selectedMonth = 0
     @State var selectedDate = Date()
     @State var availableTime: [String] = ["8am - 9am", "9am - 10am", "10am - 11am", "11am - 12pm", "12pm - 1pm"]
+    @State var daySelected = 0
+    @State var isSelected: Bool = true
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -72,23 +75,28 @@ struct ContentView: View {
                     
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), content: {
                         ForEach(fetchDates()) { value in
-                            if value.day != -1 {
-                                Text("\(value.day)")
-                                    .padding(5)
-                                    .background {
-                                        ZStack(alignment: .bottom) {
-                                            Circle()
-                                                .frame(width: 35, height: 35)
-                                                .foregroundStyle(value.day % 2 != 0 ? Color("Main") : .clear)
-                                            if value.date.toString() == Date().toString() {
+                            Button {
+                                isSelected.toggle()
+                                daySelected = value.day
+                            } label: {
+                                if value.day != -1 {
+                                    Text("\(value.day)")
+                                        .padding(5)
+                                        .background {
+                                            ZStack(alignment: .bottom) {
                                                 Circle()
-                                                    .frame(width: 7, height:  7)
-                                                    .foregroundStyle(.black)
+                                                    .frame(width: 35, height: 35)
+                                                    .foregroundStyle(daySelected == value.day ? Color("Main") : .clear)
+                                                if value.date.toString() == Date().toString() {
+                                                    Circle()
+                                                        .frame(width: 7, height:  7)
+                                                        .foregroundStyle(.black)
+                                                }
                                             }
                                         }
-                                    }
-                            } else {
-                                Text("")
+                                } else {
+                                    Text("")
+                                }
                             }
                         }
                     })
@@ -98,27 +106,35 @@ struct ContentView: View {
                     VStack(spacing: 30) {
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 2), content: {
                             ForEach(availableTime, id: \.self) { time in
-                                NavigationLink {
-                                    EmptyView()
-                                } label: {
-                                    Capsule()
-                                        .fill(Color("Main")).opacity(0.2)
-                                        .frame(width: 150, height: 50)
-                                        .overlay {
-                                            Text(time)
-                                        }
+                                
+                                if (daySelected != 0) {
+                                    NavigationLink {
+                                        EmptyView()
+                                    } label: {
+                                        Capsule()
+                                            .fill(Color("Main")).opacity(0.2)
+                                            .frame(width: 150, height: 50)
+                                            .overlay {
+                                                Text(time)
+                                            }
+                                }
                                 }
                             }
                         })
                         NavigationLink {
                             EmptyView()
                         } label: {
-                            Text("Select time")
-                                .padding()
-                                .background {
-                                    Capsule()
-                                        .stroke()
+                            
+                            if isSelected {
+                                Text("Select time")
+                                    .foregroundStyle(isSelected ? Color(.blue) : Color(.red))
+                                    .padding()
+                                    .background {
+                                        Capsule()
+                                            .stroke()
+                                            .foregroundStyle(isSelected ? Color(.blue) : Color(.red))
                                 }
+                            }
                         }
                     }
                     Spacer()
