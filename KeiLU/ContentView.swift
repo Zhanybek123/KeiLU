@@ -125,14 +125,14 @@ struct ContentView: View {
                             EmptyView()
                         } label: {
                             
-                            if isSelected {
+                            if daySelected != 0 {
                                 Text("Select time")
-                                    .foregroundStyle(isSelected ? Color(.blue) : Color(.red))
+                                    .foregroundStyle(daySelected != 0 ? Color(.blue) : Color(.red))
                                     .padding()
                                     .background {
                                         Capsule()
                                             .stroke()
-                                            .foregroundStyle(isSelected ? Color(.blue) : Color(.red))
+                                            .foregroundStyle(daySelected != 0 ? Color(.blue) : Color(.red))
                                 }
                             }
                         }
