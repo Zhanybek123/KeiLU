@@ -8,17 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		D870F6762B488D7C00865AC1 /* KeiLUApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870F6752B488D7C00865AC1 /* KeiLUApp.swift */; };
-		D870F6782B488D7C00865AC1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870F6772B488D7C00865AC1 /* ContentView.swift */; };
+		D870F6782B488D7C00865AC1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D870F6772B488D7C00865AC1 /* CalendarView.swift */; };
 		D870F67A2B488D7D00865AC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D870F6792B488D7D00865AC1 /* Assets.xcassets */; };
 		D870F67D2B488D7D00865AC1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D870F67C2B488D7D00865AC1 /* Preview Assets.xcassets */; };
+		D8AEB14E2B6C47B3005D8128 /* ArtistsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8AEB14D2B6C47B3005D8128 /* ArtistsListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D870F6722B488D7C00865AC1 /* KeiLU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KeiLU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D870F6752B488D7C00865AC1 /* KeiLUApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeiLUApp.swift; sourceTree = "<group>"; };
-		D870F6772B488D7C00865AC1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		D870F6772B488D7C00865AC1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D870F6792B488D7D00865AC1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D870F67C2B488D7D00865AC1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		D8AEB14D2B6C47B3005D8128 /* ArtistsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +54,8 @@
 			isa = PBXGroup;
 			children = (
 				D870F6752B488D7C00865AC1 /* KeiLUApp.swift */,
-				D870F6772B488D7C00865AC1 /* ContentView.swift */,
+				D870F6772B488D7C00865AC1 /* CalendarView.swift */,
+				D8AEB14D2B6C47B3005D8128 /* ArtistsListView.swift */,
 				D870F6792B488D7D00865AC1 /* Assets.xcassets */,
 				D870F67B2B488D7D00865AC1 /* Preview Content */,
 			);
@@ -137,7 +140,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D870F6782B488D7C00865AC1 /* ContentView.swift in Sources */,
+				D8AEB14E2B6C47B3005D8128 /* ArtistsListView.swift in Sources */,
+				D870F6782B488D7C00865AC1 /* CalendarView.swift in Sources */,
 				D870F6762B488D7C00865AC1 /* KeiLUApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

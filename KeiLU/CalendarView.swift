@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CalendarView: View {
     let days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
     @State var selectedMonth = 0
     @State var selectedDate = Date()
@@ -124,7 +124,6 @@ struct ContentView: View {
                         NavigationLink {
                             EmptyView()
                         } label: {
-                            
                             if daySelected != 0 {
                                 Text("Select time")
                                     .foregroundStyle(daySelected != 0 ? Color(.blue) : Color(.red))
@@ -172,7 +171,7 @@ struct CalendarDate: Identifiable {
 }
 
 #Preview {
-    ContentView()
+    CalendarView()
 }
 
 

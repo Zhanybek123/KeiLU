@@ -11,7 +11,7 @@ import SwiftUI
 struct KeiLUApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ArtistsListView()
         }
     }
 }
