@@ -18,12 +18,14 @@ struct ArtistModel: Hashable {
 struct ArtistsListView: View {
     
     @State var artists: [ArtistModel] = [
-    ArtistModel(logo: "nailArtist"
+    ArtistModel(logo: "nailArtist2"
 , name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
-    ArtistModel(logo: "nailArtist"
+    ArtistModel(logo: "nailArtist3"
 , name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
-    ArtistModel(logo: "nailArtist"
-, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"])
+    ArtistModel(logo: "nailArtist4"
+, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
+    ArtistModel(logo: "nailArtist5"
+, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
     ]
     
     var body: some View {
@@ -97,12 +99,17 @@ struct ArtistsListView: View {
                         HStack {
                             Image(artist.logo)
                                 .resizable()
-                                .scaledToFill()
-                                .frame(width: 100, height: 100, alignment: .center)
-                                .padding(16)
+                                .scaledToFit()
+                                .frame(maxWidth: 100, maxHeight: 100)
                             
+                            VStack {
+                                Text(artist.name)
+                                    .font(.title3)
+                                    .bold()
+                            }
                         }
                     }
+                    .padding(0)
                     
 
                 }
