@@ -11,21 +11,33 @@ struct ArtistModel: Hashable {
     let logo: String
     let name: String
     let minimumPrice: Int
-    let avarageDuration: Int
+    let averageDuration: Int
     let sesrvices: [String]
 }
 
 struct ArtistsListView: View {
     
     @State var artists: [ArtistModel] = [
-    ArtistModel(logo: "nailArtist2"
-, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
-    ArtistModel(logo: "nailArtist3"
-, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
-    ArtistModel(logo: "nailArtist4"
-, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
-    ArtistModel(logo: "nailArtist5"
-, name: "LucysSpot", minimumPrice: 45, avarageDuration: 40, sesrvices: ["Face" , "Nails", "Massage"]),
+        ArtistModel(logo: "nailArtist2",
+                    name: "LucysSpot",
+                    minimumPrice: 45, 
+                    averageDuration: 40,
+                    sesrvices: ["Face" , "Nails", "Massage"]),
+        ArtistModel(logo: "nailArtist3",
+                    name: "LucysSpot",
+                    minimumPrice: 45,
+                    averageDuration: 40,
+                    sesrvices: ["Face" , "Nails", "Massage"]),
+        ArtistModel(logo: "nailArtist4",
+                    name: "LucysSpot",
+                    minimumPrice: 45,
+                    averageDuration: 40,
+                    sesrvices: ["Face" , "Nails", "Massage"]),
+        ArtistModel(logo: "nailArtist5",
+                    name: "LucysSpot",
+                    minimumPrice: 45,
+                    averageDuration: 40,
+                    sesrvices: ["Face" , "Nails", "Massage"])
     ]
     
     var body: some View {
@@ -82,18 +94,21 @@ struct ArtistsListView: View {
                     VStack {
                         HStack {
                             Image(systemName: "star")
+                                .foregroundStyle(Color.blue)
                             Text("\(4)")
+                                .foregroundStyle(Color.blue)
                         }
-                        .padding(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+                        .padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
                         .overlay {
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.black, lineWidth: 1)
+                                .stroke(Color.blue, lineWidth: 1)
                         }
                         Text("100+ rating")
                             .font(.system(size: 13, weight: .regular))
+                            .foregroundStyle(Color.blue)
                     }
                 }
-                .padding(24)
+                .padding(20)
                 List {
                     ForEach(artists, id: \.self) { artist in
                         HStack {
@@ -101,18 +116,26 @@ struct ArtistsListView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(maxWidth: 100, maxHeight: 100)
-                            
-                            VStack {
+                                .clipShape(RoundedRectangle(cornerRadius: 14))
+                            VStack(alignment: .leading) {
                                 Text(artist.name)
                                     .font(.title3)
                                     .bold()
+                                Text("$\(artist.minimumPrice)")
+                                    .foregroundStyle(.gray)
+                                Spacer()
+                                Text("\(artist.averageDuration) Mins")
+                                    .foregroundStyle(.gray)
+                                    .font(.system(size: 13))
                             }
+                            .padding(EdgeInsets(top: 10, leading: 2, bottom: 10, trailing: 2))
                         }
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)) // Remove list row insets
+//                        .padding()
+                        .frame(height: 100)
                     }
-                    .padding(0)
-                    
-
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }
