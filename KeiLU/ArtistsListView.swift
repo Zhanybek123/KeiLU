@@ -18,6 +18,11 @@ struct ArtistModel: Hashable {
 struct ArtistsListView: View {
     
     @State var artists: [ArtistModel] = [
+        ArtistModel(logo: "ground-beef-tacos-1-11",
+                    name: "LucysSpot",
+                    minimumPrice: 45,
+                    averageDuration: 40,
+                    sesrvices: ["Face" , "Nails", "Massage"]),
         ArtistModel(logo: "nailArtist2",
                     name: "LucysSpot",
                     minimumPrice: 45,
@@ -54,7 +59,9 @@ struct ArtistsListView: View {
                         Image(selectedArtist.logo)
                             .resizable()
                             .scaledToFill()
-                            .frame(maxWidth: geometry.size.width, maxHeight: 300)
+                            .frame(maxWidth: geometry.size.width, maxHeight: 350)
+                            .frame(width: geometry.size.width, height: 350)
+//                            .clipped(antialiased: true)
                             .ignoresSafeArea()
                         
                         VStack(alignment: .leading, spacing: 3) {
@@ -75,7 +82,7 @@ struct ArtistsListView: View {
                         .padding(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
                         
                     }
-                    .frame(maxWidth: geometry.size.width, maxHeight: 300)
+//                    .frame(maxWidth: geometry.size.width, maxHeight: geometry.size.height / 4)
                     
                     HStack(spacing: 16) {
                         NavigationLink {
@@ -137,7 +144,7 @@ struct ArtistsListView: View {
                                 HStack {
                                     Image(artist.logo)
                                         .resizable()
-                                        .scaledToFit()
+                                        .scaledToFill()
                                         .frame(maxWidth: 100, maxHeight: 100)
                                         .clipShape(RoundedRectangle(cornerRadius: 14))
                                     VStack(alignment: .leading) {
@@ -155,7 +162,7 @@ struct ArtistsListView: View {
                                     .padding(EdgeInsets(top: 10, leading: 2, bottom: 10, trailing: 2))
                                 }
                             }
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                             .frame(height: 100)
                         }
                     }
